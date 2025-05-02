@@ -53,19 +53,16 @@ class Chromosome:
                 total_distance += math.sqrt((x2 - x)**2 + (y2 - y)**2)
                 x, y = x2, y2
             total_distance += math.sqrt(x**2 + y**2)
-
-        # Penalty for unassigned packages
-        unassigned_count = len(self.packages) - len(assigned_packages)
-        total_distance += unassigned_count * 10000
-
+        
         # Penalty for priority violations
+        #priority_penalties = 0
         for truck_id in self.genes:
             for i in range(len(self.genes[truck_id]) - 1):
                 pkg1 = self.packages[self.genes[truck_id][i]]
                 pkg2 = self.packages[self.genes[truck_id][i + 1]]
                 if pkg1.priority > pkg2.priority:  # Lower priority delivered first
                     total_distance += 200
-
+        #print(f"Priority penalties applied: {priority_penalties}")  # Debug
         self.fitness = total_distance
 
     def mutate(self, mutation_rate: float = 0.2):

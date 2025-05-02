@@ -1,7 +1,7 @@
 from ui.cli_interface import display_menu
 from models.truck import Truck
 import random
-from utils.distance import calculate_distance
+from utils.distance import *
 from algorithms.genetic_algorithm import GeneticAlgorithm
 from utils.file_io import read_file
 
@@ -42,6 +42,7 @@ if __name__ == "__main__":
     # Display results
     print("\nBest Package Assignments:\n")
     total_distance = best_solution.fitness
+
     for truck in trucks:
         truck_num = truck.number
         package_indices = best_solution.genes[truck_num]
@@ -59,4 +60,16 @@ if __name__ == "__main__":
                 x, y = x2, y2
             route_distance += calculate_distance(x, y, 0, 0)
         print(f"  Route Distance: {route_distance:.2f} km\n")
+
+    # Check if total capacity is sufficient
+    if not can_fit_all_packages(packages, trucks):
+        print("\n Warning: The total weight of packages exceeds the combined capacity of all trucks.")   
+    # Check for unassigned packages in final solution
+    assigned_packages = set()
+    for truck in trucks:
+        assigned_packages.update(best_solution.genes[truck.number])
+    unassigned_count = len(packages) - len(assigned_packages)
+    if unassigned_count > 0:
+        print(f" Warning: Not enough total truck capacity to carry {unassigned_count} package(s).")
+             
     print(f"Total Distance: {total_distance:.2f} km")
