@@ -15,7 +15,12 @@ class Truck:
     
     def can_add_package(self, package: Package) -> bool:
         return self.current_weight() + package.weight <= self.weightcap
-
+    
+    def add_package(self, package):
+        if self.can_add_package(package):
+            self.packages.append(package)
+            return True
+        return False
 
     def __str__(self):
         return f'Truck {self.number} | Weight Capacity: {self.weightcap} | Packages: {len(self.packages)}'

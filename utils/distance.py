@@ -19,10 +19,6 @@ def calculate_total_distance(trucks):
         total+=calculate_distance(curr_dest_x, curr_dest_y,0, 0)
     return total
 
-def can_fit_all_packages(packages, trucks):
-    total_package_weight = sum(pkg.weight for pkg in packages)
-    total_truck_capacity = sum(truck.weightcap for truck in trucks)
-    return total_package_weight <= total_truck_capacity
 
 
 '''def truck_distance(truck):
