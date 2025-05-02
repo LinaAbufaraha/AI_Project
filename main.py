@@ -53,7 +53,7 @@ def display_solution(best_solution, packages, trucks):
 
 # --- Main execution ---
 if __name__ == "__main__":
-    packages = read_file("data/test_case_1.txt")
+    packages = read_file("data/test_case_2.txt")
     print(f"\n Loaded {len(packages)} packages.\n")
 
     trucks = display_menu()
@@ -61,6 +61,7 @@ if __name__ == "__main__":
     # ----------------- Run Simulated Annealing -----------------
     print("\nRunning Simulated Annealing...\n")
     trucks_sa = copy.deepcopy(trucks)
+    
     sa = SimulatedAnnealing(initial_solution_func=initial_solution, schedule_func=cooling_schedule)
     best_sa_solution = sa.run(packages, trucks_sa)
 
@@ -70,12 +71,13 @@ if __name__ == "__main__":
         for pkg in truck.packages:
             print(f"  - {pkg}")
         print()
+
     if not can_fit_all_packages(packages, trucks):
-        print("\n Warning: The total weight of packages exceeds the combined capacity of all trucks.")
+        print("\n Warning: The total weight of packages exceeds the combined capacity of all trucks. \n")
+    
+    print(f"Total Distance (SA): {calculate_total_distance(best_sa_solution):.2f} km")
        # print("Terminating optimization. Please add more trucks or increase their capacities.")
     
-    print(f"Total Distance (SA): {calculate_total_distance(trucks_sa):.2f} km")
-
 
     # ----------------- Run genetic algorithm -----------------
     print("\nRunning Genetic Algorithm...\n")
