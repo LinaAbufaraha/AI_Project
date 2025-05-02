@@ -11,8 +11,6 @@ def read_file(filename):
             x, y = int(parts[0]), int(parts[1])
             weight = float(parts[2])
             priority = int(parts[3])
-            package = Package([x, y], weight, priority)
-            packages.append(package)
+            packages.append(Package([x, y], weight, priority))
     return packages
-
           
