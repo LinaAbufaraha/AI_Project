@@ -8,8 +8,7 @@ from models.package import Package
 
 
 class GeneticAlgorithm:
-    def __init__(self, packages: List[Package], trucks: List[Truck], population_size: int = 100,
-                 generations: int = 500, mutation_rate: float = 0.2, crossover_rate: float = 0.8):
+    def __init__(self, packages: List[Package], trucks: List[Truck], population_size: int = 100, generations: int = 500, mutation_rate: float = 0.2, crossover_rate: float = 0.8):
         """Initialize the genetic algorithm with parameters."""
         self.packages = packages
         self.trucks = trucks

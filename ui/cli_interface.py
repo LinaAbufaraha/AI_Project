@@ -1,6 +1,6 @@
 from models.truck import Truck
 from utils.file_io import read_file
-
+from utils.distance import *
 
 # --- Ask user for truck info ---
 def display_menu():
@@ -11,34 +11,30 @@ def display_menu():
         trucks.append(Truck(str(i), capacity))
     return trucks
 
-# ui/cli_interface.py
+def display_solution(best_solution, packages, trucks):
+    total_assigned = set()
+    for truck in trucks:
+        truck_num = truck.number
+        package_indices = best_solution.genes.get(truck_num, [])
+        total_assigned.update(package_indices)
 
-from algorithms.genetic_algorithm import GeneticAlgorithm
-from utils.file_io import read_file
-from models.truck import Truck
+        assigned_packages = [packages[i] for i in package_indices]
+        print(f"\nTruck {truck_num} | Capacity: {truck.weightcap} kg | Packages: {len(package_indices)}")
+        total_weight = sum(pkg.weight for pkg in assigned_packages)
+        print(f"  Total Weight: {total_weight:.2f} kg")
 
-'''def run_genetic_algorithm():
-    print("🔬 Running Genetic Algorithm for Package Delivery Optimization...\n")
+        for pkg in assigned_packages:
+            print(f"  - {pkg}")
 
-    # تحميل البيانات
-    packages = read_file("data/input.txt")
+        if assigned_packages:
+            x, y = 0, 0
+            route_distance = 0
+            for pkg in assigned_packages:
+                x2, y2 = pkg.destination
+                route_distance += calculate_distance(x, y, x2, y2)
+                x, y = x2, y2
+            route_distance += calculate_distance(x, y, 0, 0)
+            print(f"  Route Distance: {route_distance:.2f} km")
 
+    return total_assigned
 
-    # إعداد الشاحنات (يمكن لاحقًا قراءتها من ملف أو إدخال المستخدم)
-    num_trucks = 3
-    truck_capacity = 50
-
-    # تشغيل الخوارزمية
-    ga = GeneticAlgorithm(packages, num_trucks, truck_capacity,
-                          population_size=50, generations=100, mutation_rate=0.05)
-    best = ga.run()
-
-    # عرض النتيجة
-    print("\n✅ Best Solution Found:")
-    for i, truck in enumerate(best.genes):
-        print(f"  Truck {i + 1}:")
-        for pkg_index in truck:
-            pkg = packages[pkg_index]
-            print(f"    - To {pkg.destination}, Weight: {pkg.weight}, Priority: {pkg.priority}")
-    print(f"\n📏 Total Distance: {best.fitness:.2f} km")
-    '''
