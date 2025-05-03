@@ -72,6 +72,7 @@ class SimulatedAnnealing:
                     penalty += 1
         return penalty
 
+
     #simulated_annealing
     def run(self, packages, trucks):
         current = initial_solution(packages, trucks)
