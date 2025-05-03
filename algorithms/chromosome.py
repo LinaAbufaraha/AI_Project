@@ -61,8 +61,7 @@ class Chromosome:
                 pkg1 = self.packages[self.genes[truck_id][i]]
                 pkg2 = self.packages[self.genes[truck_id][i + 1]]
                 if pkg1.priority > pkg2.priority:  # Lower priority delivered first
-                    total_distance += 200
-        #print(f"Priority penalties applied: {priority_penalties}")  # Debug
+                    total_distance += 100
         self.fitness = total_distance
 
     def mutate(self, mutation_rate: float = 0.2):

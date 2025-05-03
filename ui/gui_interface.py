@@ -16,7 +16,7 @@ from utils.graphs import plot_truck_paths
 
 
 def operate():
-    packages = read_file("data/test_case_1.txt")
+    packages = read_file("data/test_case_2.txt")
     print(f"\n Loaded {len(packages)} packages.\n")
 
 
