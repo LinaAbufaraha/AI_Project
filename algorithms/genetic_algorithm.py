@@ -7,9 +7,8 @@ from models.truck import Truck
 from models.package import Package
 
 
-class GeneticAlgorithm:
+class GeneticAlgorithm:                 #Initialize the genetic algorithm with parameters.
     def __init__(self, packages: List[Package], trucks: List[Truck], population_size: int = 100, generations: int = 500, mutation_rate: float = 0.1, crossover_rate: float = 0.8):
-        """Initialize the genetic algorithm with parameters."""
         self.packages = packages
         self.trucks = trucks
         self.population_size = population_size
@@ -20,16 +19,14 @@ class GeneticAlgorithm:
         self.best_solution: Chromosome = None
 
     def initialize_population(self):
-        """Create an initial population of random chromosomes."""
+        #Create an initial population of random chromosomes.
         self.population = [Chromosome(self.packages, self.trucks) for _ in range(self.population_size)]
 
-    def tournament_selection(self, tournament_size: int = 2) -> Chromosome:
-        """Select a parent using tournament selection."""
+    def tournament_selection(self, tournament_size: int = 2) -> Chromosome:  #Select a parent using tournament selection.
         tournament = random.sample(self.population, tournament_size)
         return min(tournament, key=lambda c: c.fitness)  # Lower fitness (distance) is better
     
     def run(self) -> Chromosome:
-        """Run the genetic algorithm and return the best solution."""
         self.initialize_population()
         self.best_solution = min(self.population, key=lambda c: c.fitness)
         for gen in range(self.generations):

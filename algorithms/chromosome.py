@@ -5,23 +5,22 @@ from typing import Dict, List
 from models.truck import Truck
 from models.package import Package
 
+
 class Chromosome:
-    def __init__(self, packages: List[Package], trucks: List[Truck]):
-        """Initialize a chromosome with a random valid assignment of packages to trucks."""
+    def __init__(self, packages: List[Package], trucks: List[Truck]): #Initialize a chromosome with a random valid assignment of packages to trucks.
         self.packages = packages
         self.trucks = trucks
         self.genes: Dict[str, List[int]] = {truck.number: [] for truck in trucks}  # truck_id: list of package indices
         self.fitness: float = float('inf')
         self._generate_valid_random_assignment()
         self._calculate_fitness()
-
+ 
+    #Calculate the total weight of packages assigned to a truck.
     def _truck_weight(self, truck_id: str) -> float:
-        """Calculate the total weight of packages assigned to a truck."""
         return sum(self.packages[pkg_index].weight for pkg_index in self.genes[truck_id])
     
-
+    #Assign packages to trucks randomly, prioritizing high-priority packages.
     def _generate_valid_random_assignment(self):
-        """Assign packages to trucks randomly, prioritizing high-priority packages."""
         unassigned = list(range(len(self.packages)))
         unassigned.sort(key=lambda i: self.packages[i].priority)  # Prioritize high-priority
         for pkg_index in unassigned:
@@ -32,9 +31,8 @@ class Chromosome:
                 if self._truck_weight(truck.number) + pkg.weight <= truck.weightcap:
                     self.genes[truck.number].append(pkg_index)
                     break
-
+    #Calculate fitness as total distance, with penalties for unassigned packages.
     def _calculate_fitness(self):
-        """Calculate fitness as total distance, with penalties for unassigned packages."""
         total_distance = 0
         assigned_packages = set()
         shop = (0, 0)
@@ -63,9 +61,8 @@ class Chromosome:
                 if pkg1.priority > pkg2.priority:  # Lower priority delivered first
                     total_distance += 100
         self.fitness = total_distance
-
+    # Mutate by swapping packages or shuffling routes, respecting capacity.
     def mutate(self, mutation_rate: float = 0.2):
-        """Mutate by swapping packages or shuffling routes, respecting capacity."""
         for _ in range(2):  # Multiple mutation attempts
             for truck in self.trucks:
                 truck_id = truck.number
