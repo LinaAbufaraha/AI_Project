@@ -59,3 +59,13 @@ The shop owns a limited number of trucks with fixed capacity. The challenge is t
 - Iterations per Temperature: `100`
 
 ---
+
+## 📧 Contact
+
+For questions, collaborations, or opportunities, feel free to connect with me:
+
+👩‍💻 **Lina Abufaraha**  
+🔗 [LinkedIn Profile](https://www.linkedin.com/in/linaabufarha/)   
+📫 Email: linaabufarha1@gmail.com
+
+
